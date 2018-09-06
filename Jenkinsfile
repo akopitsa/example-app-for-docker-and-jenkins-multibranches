@@ -20,6 +20,12 @@ node {
 
         app = docker.build("quay.io/andrey_kopitsa/example-app")
     }
+    stage('Build image for ECR Hub') {
+        /* This builds the actual image; synonymous to
+         * docker build on the command line */
+
+        app = docker.build("0123456789.ecr.eu-west-1.amazonaws.com/example-app")
+    }
     stage('Test') {
         app.inside{
             sh 'npm test'
@@ -40,6 +46,15 @@ node {
         /* Finally, we'll push the image into Docker Hub */
 
         docker.withRegistry('https://quay.io', 'quay-docker-creds') {
+           /*  app.push("latest") */
+		app.push("${env.BRANCH_NAME}-latest")
+		app.push("${env.BRANCH_NAME}-${env.BUILD_NUMBER}")
+        }
+    }
+    stage('Push image to ECR Hub') {
+        /* Finally, we'll push the image into Docker Hub */
+
+        docker.withRegistry('https://0123456789.ecr.eu-west-1.amazonaws.com', 'ecr:eu-west-1.com:my-aws-creds') {
            /*  app.push("latest") */
 		app.push("${env.BRANCH_NAME}-latest")
 		app.push("${env.BRANCH_NAME}-${env.BUILD_NUMBER}")
