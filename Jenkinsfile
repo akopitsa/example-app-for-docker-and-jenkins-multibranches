@@ -18,7 +18,7 @@ node {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
 
-        app = docker.build("quay.io/24may/example-app")
+        app = docker.build("quay.io/andrey_kopitsa/example-app")
     }
     stage('Test') {
         app.inside{
