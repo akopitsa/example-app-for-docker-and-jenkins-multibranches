@@ -11,9 +11,9 @@ node {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
 
-        app = docker.build("24may/example-app")
-    }
-    */
+    //    app = docker.build("24may/example-app")
+    //}
+    
     stage('Build image for QUAY Hub') {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
@@ -28,14 +28,14 @@ node {
     /*
     stage('Push image to Docker Hub') {
         /* Finally, we'll push the image into Docker Hub */
-
-        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-creds') {
+     
+    //    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-creds') {
            /*  app.push("latest") */
-		app.push("${env.BRANCH_NAME}-latest")
-		app.push("${env.BRANCH_NAME}-${env.BUILD_NUMBER}")
-        }
-    }
-   */
+	//	app.push("${env.BRANCH_NAME}-latest")
+	//	app.push("${env.BRANCH_NAME}-${env.BUILD_NUMBER}")
+    //    }
+    //}
+   
     stage('Push image to Quay Hub') {
         /* Finally, we'll push the image into Docker Hub */
 
